@@ -8,8 +8,6 @@ A RESTful API built with Django and Django REST Framework for managing location 
 3. [Configuration](#configuration)
 4. [Usage](#usage)
 5. [API Endpoints](#api-endpoints)
-6. [Contributing](#contributing)
-7. [License](#license)
 
 ---
 
@@ -91,3 +89,68 @@ To switch between environments, set the `DJANGO_ENV` variable in your `.env` fil
 
 ```env
 DJANGO_ENV=development
+
+# Usage  
+
+## Creating a Superuser  
+```bash
+python manage.py createsuperuser
+```  
+Access admin at `http://127.0.0.1:8000/admin/`.
+
+## Testing the API
+Use `curl`, Postman, or HTTP clients.
+
+### Example Requests
+
+1. **List All Locations**
+```bash
+curl http://127.0.0.1:8000/api/locations/
+```  
+
+2. **Retrieve a Specific Location**
+```bash
+curl http://127.0.0.1:8000/api/locations/<uuid>/
+```  
+
+3. **Create a New Location**
+```bash
+curl -X POST http://127.0.0.1:8000/api/locations/ \
+-H "Content-Type: application/json" \
+-d '{
+  "location_code": "NEWLOC",
+  "name": "New Location",
+  "city": "New City",
+  "province": "New Province",
+  "country": "New Country",
+  "coordinates": [12.345, 67.890],
+  "timezone": "UTC",
+  "unlocs": ["NEWLOC"],
+  "alias": [],
+  "regions": []
+}'
+```  
+
+4. **Update a Location**
+```bash
+curl -X PUT http://127.0.0.1:8000/api/locations/<uuid>/ \
+-H "Content-Type: application/json" \
+-d '{"name": "Updated Location"}'
+```  
+
+5. **Delete a Location**
+```bash
+curl -X DELETE http://127.0.0.1:8000/api/locations/<uuid>/
+```  
+
+---
+
+# API Endpoints
+
+| Method | Endpoint | Action |
+|--------|----------|--------|
+| `GET` | `/api/locations/` | List all locations |
+| `POST` | `/api/locations/` | Create a new location |
+| `GET` | `/api/locations/<uuid>/` | Retrieve a specific location |
+| `PUT` | `/api/locations/<uuid>/` | Update a specific location |
+| `DELETE` | `/api/locations/<uuid>/` | Soft-delete a location |
